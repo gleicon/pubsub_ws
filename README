@@ -1,0 +1,36 @@
+PubSub using node.js and Redis
+
+uses: 
+
+http://github.com/ncr/node.ws.js
+http://github.com/fictorial/redis-node-client
+
+Testing:
+$ cd test
+$ python -m SimpleHTTPServer
+
+In another terminal:
+$ node ./pubsub_ws.js
+
+open your browser at http://localhost:8000/interact.html
+
+publish messages to redis using redis-cli:
+
+$ redis-cli
+redis> set my_key something
+OK
+redis> publish TEST:PUBSUB my_key
+(integer) 1
+
+'something' must appear in the browser.
+
+pubsub_ws.js subscribe to a channel called 'TEST:PUBSUB' and waits for values that are treated as keys.
+
+Run publisher.js for a twitter based demo. It searches for bit.ly URLs and uses the same html pages to display them. Instead of publishing via redis, just run as:
+
+$ node publisher.js
+
+
+gleicon 2010 | http://zenmachine.wordpress.com | http://github.com/gleicon
+
+
