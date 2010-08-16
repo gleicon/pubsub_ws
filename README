@@ -30,6 +30,7 @@ Run publisher.js for a twitter based demo. It searches for bit.ly URLs and uses 
 
 $ node publisher.js
 
+libraries are on /lib
 
 gleicon 2010 | http://zenmachine.wordpress.com | http://github.com/gleicon
 
