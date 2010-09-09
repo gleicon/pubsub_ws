@@ -22,7 +22,7 @@
                 
                 $("#draggable").draggable(
                   {
-                    stop: function(e, ui) { 
+                    drag: function(e, ui) { 
                       pos = JSON.stringify(ui.position);
                       ws.send(pos); 
                       console.log(pos);
