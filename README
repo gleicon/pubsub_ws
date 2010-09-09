@@ -32,6 +32,22 @@ $ node publisher.js
 
 libraries are on /lib
 
+Draggable demo:
+
+run:
+
+$ node pubsub_standalone.js
+in other terminal (if you dont have a local webserver):
+
+$ cd test/drag
+$ python -m SimpleHTTPServer
+
+open two browser windows on http://localhost:8000/default.html (sample copied from jquery ui docs)
+
+Drag the 'drag me' box (may render only as text in some browsers)
+
+See the other browser window.
+
 gleicon 2010 | http://zenmachine.wordpress.com | http://github.com/gleicon
 
 

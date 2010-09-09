@@ -1,0 +1,70 @@
+<html>
+<head>
+<link type="text/css" href="jquery.ui.all.css" rel="stylesheet" /> 
+<script type="text/javascript" src="jquery-1.4.2.js"></script> 
+<script type="text/javascript" src="jquery.ui.core.js"></script> 
+<script type="text/javascript" src="jquery.ui.widget.js"></script> 
+<script type="text/javascript" src="jquery.ui.mouse.js"></script> 
+<script type="text/javascript" src="jquery.ui.draggable.js"></script> 
+<link type="text/css" href="demos.css" rel="stylesheet" /> 
+  
+<script>
+$(document).ready(function(){
+var ws;
+
+if ("WebSocket" in window) {
+    ws = new WebSocket("ws://localhost:8080/websession");
+    ws.onopen = function() {
+        console.log("connected...");
+    };
+
+    ws.onmessage = function (evt) {
+        var data = evt.data;
+        console.log(data);
+        $("#out").text(data);
+    };
+    ws.onerror = function(e) {
+      console.log(e);
+    }
+    ws.onclose = function() {
+        console.log("socket closed");
+    };
+} else {
+    alert("You have no web sockets");
+};
+
+});
+</script>
+</head>
+<body>
+
+
+<h1>Watch it move</h1>
+
+
+<fieldset>
+<legend>out</legend>
+<div id="out">Output should appear here</div>
+</fieldset>
+<style type="text/css">
+	#draggable { width: 150px; height: 150px; padding: 0.5em; }
+	</style>
+	<script type="text/javascript">
+	$(function() {
+		$("#draggable").draggable();
+	});
+	</script>
+
+<div class="demo">
+<div id="draggable" class="ui-widget-content">
+	<p>Drag me around</p>
+</div>
+</div>
+
+<div class="demo-description" style="display: none; ">
+
+</div>
+
+</body>
+</html>
+

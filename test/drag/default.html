@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>jQuery UI Draggable and node.js pubsub</title>
+	<link type="text/css" href="jquery.ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="jquery.ui.core.js"></script>
+	<script type="text/javascript" src="jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="jquery.ui.draggable.js"></script>
+	<link type="text/css" href="demos.css" rel="stylesheet" />
+	<style type="text/css">
+	#draggable { width: 150px; height: 150px; padding: 0.5em; border: 1px; background: #ccc;}
+	</style>
+	<script type="text/javascript">
+          $(function() {
+            var ws;
+            
+            if ("WebSocket" in window) {
+                ws = new WebSocket("ws://localhost:8080/websession");
+                
+                $("#draggable").draggable(
+                  {
+                    stop: function(e, ui) { 
+                      pos = JSON.stringify(ui.position);
+                      ws.send(pos); 
+                      console.log(pos);
+                    }
+                });
+                
+                ws.onopen = function() {
+                    console.log("connected...");
+                };
+
+                ws.onmessage = function (evt) {
+                    var data = evt.data;
+                    d = JSON.parse(data);
+                    $('#draggable').css('top', d.top);
+                    $('#draggable').css('left', d.left);
+                    console.log(d);
+                };
+                ws.onerror = function(e) {
+                  console.log(e);
+                }
+                ws.onclose = function() {
+                    console.log("socket closed");
+                };
+            } else {
+                alert("You have no web sockets");
+            };
+                
+            
+        });
+	</script>
+</head>
+<body>
+
+<div class="demo">
+
+<div id="draggable" class="ui-widget-content">
+	<p>Drag me around</p>
+</div>
+
+</div><!-- End demo -->
+
+<div class="demo-description">
+
+<p>
+Enable draggable functionality on any DOM element. Move the draggable object by clicking on it with the mouse and dragging it anywhere within the viewport.
+</p>
+
+</div><!-- End demo-description -->
+
+</body>
+</html>
