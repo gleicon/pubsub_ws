@@ -32,7 +32,6 @@ server = http.createServer(function (req, res) {
       sys.puts("connect: " + resource);
       id = new Date().getTime(); 
     });
-    //var l = function(m) { websocket.write(m); };
 
     var l = function(m) { 
       if (m.id != id) websocket.write(m.data);
