@@ -27,11 +27,16 @@ server = http.createServer(function (req, res) {
 }).listen(8081);
 
  ws.createServer(function (websocket) {
+    var id;
     websocket.addListener("connect", function (resource) { 
       sys.puts("connect: " + resource);
+      id = new Date().getTime(); 
     });
-    
-    var l = function(m) { websocket.write(m); }
+    //var l = function(m) { websocket.write(m); };
+
+    var l = function(m) { 
+      if (m.id != id) websocket.write(m.data);
+    }
 
     e_msg.addListener('message', l)
 
@@ -41,8 +46,10 @@ server = http.createServer(function (req, res) {
     }, 60 * 1000 * 60);
 
     websocket.addListener("data", function(data) {
-      e_msg.emit('message', data);
-      console.log(data);
+      var o = new Array();
+      o['id'] = id;
+      o['data'] = data;
+      e_msg.emit('message', o);
     });
     
     websocket.addListener("close", function () { 
